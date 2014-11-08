@@ -1,0 +1,23 @@
+Ser.No	File Name	File Path
+1	am335x_evm_defconfig	arch/arm/configs/am335x_evm_defconfig
+2	board-am335xevm.c	arch/arm/mach-omap2/board-am335xevm.c
+3	am33xx-smartreflex-class2.c	arch/arm/mach-omap2/ am33xx-smartreflex-class2.c
+4	devices.h	arch/arm/mach-omap2/devices.h
+5	devices.c	arch/arm/mach-ompa2/devices.c
+6	id.c	arch/arm/mach-omap2/id.c
+7	opp3xxx_data.c	
+8	pm33xx.c	
+9	timer.c	arch/arm/mach-omap2/
+10	dmtimer.c	
+11	cpu.h	arch/arm/plat-omap/include/plat/
+12	dmtimer.h	
+13	smartreflex.h	
+14	ti_adc.c	drivers/staging/iio/adc/ti_adc.c
+15	multi.c	drivers/usb/gadget/multi.c
+16	cppi41.h	drivers/usb/musb/cppi41.h
+17	cppi41.c	drivers/usb/musb/cppi41.c
+18	cppi41_dma.h	drivers/usb/musb/cppi41_dma.h
+19	cppi41_dma.c	drivers/usb/musb/cppi41_dma.c
+20	musb_gadget.c	drivers/usb/musb/musb_gadget.c
+21	ti81xx.c	drivers/usb/musb/ti81xx.c
+22	conf	scripts/kconfig/conf
