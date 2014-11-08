@@ -1,0 +1,302 @@
+Index: 
+   	0.Abstract
+	1.Introduction
+	2.Literature survey
+	3.General Description
+	4.Spefic Requirements
+	5.Behavioral Description
+	6.Data Design
+	7.Procedural Design
+	8.Interface Design
+	9.Test Provision
+	10.Conclusion and scope for future work
+	11.Bibliography
+	12.Appendices
+
+
+
+
+
+
+
+
+
+
+0.Abstract
+Kernel porting is crucial as kernel code varies from one version to other  version  and depends on changes of hardware.  
+Porting is necessary to support  modularity  for different versions of Kernel and hardware changes. 
+This Project  is about porting of Linux Kernel  to new target board.
+
+1.introduction
+	1.1 System Reference
+Kernel porting is common for all platforms, and this project fit for all ARM related development boards which runs on embedded Linux. Application areas of kernel porting is bring up/base porting target boards.
+	1.2 Overall Description
+Main aspect of kernel porting is to specify changes in kernel source code for base porting to new target board which includes changed files, modified & added functions and files.
+The minimum requirements of project is Target board ( ARM based SoC ), Embedded linux environment, Mini/Micro USB cable (To connect Host pc and Target )
+The output/usage of project is identify linux kernel changes when porting to new target board or new kernel version to existing target
+Applications of Kernel porting are to port new kernel version to target board (ARM Based SoC)  or Porting existing kernel to new target board. 
+
+
+
+
+
+
+2.Literature of Survey
+Based on the survey of porting procedures and previous Technical paper presentations  naming this project as “Linux Kernel Porting to new Target Board”. 
+3.General Description
+	3.1 Product Functions
+		Various functions provided by Kernel porting is 
+		Identify file names and function names to be changed in kernel 
+		Identify minimal peripherals devices required for base porting
+		Identify architectural changes for kernel
+		Identify the board files changes for kernel
+	3.2 Users
+Intended audience/users of this project are Linux kernel development  engineers working on different ARM based SoC(System on Chip) engineers and people working on  initialize target board with minimum peripherals
+
+	3.3 General Constraints
+This project is based on hardware, Beaglebone (ARM Cortex A8) board and software , kernel version  3.4, but it can be applicable for ARM based SoC boards and kernel version higher than 2.6.
+	3.4 Assumptions
+This project is common for all ARM Based SoC in architectural prospective and it varies with respect to Board file changes as Beaglebone is part of TI processor family if we are considering Exynos family of processors board file changes will be vary. 
+4.Spefic Requirements
+	4.1 Functional Requirements
+		4.1.1 Functional Requirement 1
+			4.1.1.1 Introduction 
+Identify Arm architecture based files and made corresponding changes.
+			4.1.1.2  Input
+					Arm architecture based files
+Arch/arm/mach-omap2
+			4.1.1.3 Processing
+Identify files in arch/arm/mach-omap2/* directory and made changes based on new architecture, i.e add target board device initialization data  like i2c, spi, timer etc..
+ ex. arch/arm/mach-omap2/board-am335xevm.h
+ex.arch/arm/mach-omap2/timer.c
+			4.1.1.4 Outputs
+Successful compilation of kernel  with new architectural changes is output.
+ex. arch/arm/mach-omap2/board-am335xevm.h
+		4.1.2 Function Requirement 2
+			4.1.2.1 Introduction
+Identify driver files in kernel directory and  made corresponding changes.
+			4.1.2.2 Inputs
+Drivers files in kernel directory like usb drivers,staging drivers,  which includes basic peripheral drivers to initialize the target board.
+					Ex.drivers/usb/gadget/multi.c
+					Ex.drivers/staging/iio/adc/ti_adc.c
+			4.1.2.3 Processing
+Adding changes for driver files
+ex.for usb adding vendor id and manufacturer   name in driver list for new target board.
+			4.1.2.4 Outputs
+Successful compilation of kernel after making changes in kernel is excepted output. 
+	4.2 External Interface Requirements
+		4.2.1 User Interfaces
+Kernel compilation on linux environment and creating kernel image (uImage) and boot loader image
+(MLO, u-boot) are created in linux environment. These are accessed through vi shell in linux.  
+		4.2.2 Hardware Interfaces
+Micro USB cable is used to connect the target board (Beaglebone) from host pc.
+		4.2.3 Software Interfaces
+Minicom (From Linux) or Teraterminal (From windows)  is used to connect  target board form host pc.
+		4.2.4 Communication Interfaces 
+USB serial cable is used to communicate from host pc to target board and vice versa.
+	4.3 Performance Requirements 
+		4.3.1 Performance Requirement 
+			4.3.1.1 Introduction
+Target board devices have to work perfectly, once porting has been completed on its capabilities without giving delay or latency.
+			4.3.1.2 Performance requirement 
+Once porting has done, all platform devices like DMA, Timer, I2C, SPI, etc. has to work based on the functionality in preferred time  given by board design engineers.
+Ex. DMA has to transfer data using assigned number of channels (either 8/16/32), which is board dependent from device to memory or memory to device.
+ 
+	4.4 Design Constraints
+		4.4.1 Standards Compliance
+Linux Kernel porting is fully open source project , target board data available from board vendor and linux kernel version is fully open source. 
+This project is done completely based on open source data as beaglebone is open source development board from TI and so board data available without any constraints from vendor.		
+		4.4.2 Hardware Limitations
+This project is specific to Beaglebone  which uses arm cortex A8 processor which belongs to ARM v7 architecture.
+If board devices (peripheral devices) are changing from one board to other board , identify common devices and and changes in the file will be same. 
+Board file changes are common to  ARM specific SoC boards because so many files and functions are common irrespective of board vendors as architecture is same.
+		4.4.3 Systems Limitations
+The present project done on Beaglebone runs on cortex A8 processor and function names or file names varies with MMU, Kernel in arch/arm/kernel , arch/arm/mm etc..  based on the processor version ex.Cortex 9/A12/A15/A17.
+
+	4.5 Attributes 
+		4.5.1 Availability
+Kernel porting is available all times and no restrictions for getting software if hardware availability is there as to test the same on the board.
+		4.5.2 Security/Privacy 
+Security or privacy rules are not applicable for this project as it is completely open source project.
+		4.5.3 Portability
+If kernel version changes are not affecting the board files, same changes can be used for other kernel versions. 
+		4.5.4 Quality Assurance Requirements
+This project quality is dependent on performance of board, board devices and open source kernel 
+We can measure Quality, based on test suite available for target board from board vendor which includes to test all platform drivers with different test cases, that gives quality measurement check 
+		4.5.5 Accuracy Requirements 
+Accuracy requirements are done through test suite running on board , once kernel porting is done.
+
+
+
+
+
+
+
+
+
+
+5. Behavioral Description
+	5.1 System States
+		
+			
+
+				
+			
+
+
+
+
+
+	5.2 Events and Actions
+Original kernel is vanilla kernel which is having initial support to processor (ARM Cortex A8).
+Changes are added to kernel in “arch/arm/mach-omap” directory and “drivers/” directory which supports for board files and driver files to provide initial support for target board.
+Merged kernel provides support to target board with specific drivers support or bringing board for basic initialization. 
+6. Data Design
+	6.1 Data Objects and Data Structures
+Data objects and Data structures are not applicable for this project  as it is open source project and it is using vanila kernel.
+	6.2 Files and Database Structures
+		6.2.1 Logical File Structure 
+
+Logical file structure is not applicable for this project as it
+is open source project.
+		6.2.2 Logical Record Description
+Logical record description is not applicable for this project as it is open source project.
+		6.2.3 Access Methods
+Access methods are not applicable for this project as it is open source project.
+	6.3 Global Data
+		Data used in this project is vanilla kernel, available from 
+www.kernel.org and this is global data, target board data is specific to board and it depends on board vendor to provide it as public or licensed.
+
+7. Procedural Design
+	7.1 Module Name
+		Kernel is changed to support  beagle bone in several files 
+instead of each module ,creating table to list all files changed for supporting  porting of kernel.			
+
+		
+ 
+		
+Ser.No	File Name	File Path
+1	am335x_evm_defconfig	arch/arm/configs/am335x_evm_defconfig
+2	board-am335xevm.c	arch/arm/mach-omap2/board-am335xevm.c
+3	am33xx-smartreflex-class2.c	arch/arm/mach-omap2/ am33xx-smartreflex-class2.c
+4	devices.h	arch/arm/mach-omap2/devices.h
+5	devices.c	arch/arm/mach-ompa2/devices.c
+6	id.c	arch/arm/mach-omap2/id.c
+7	opp3xxx_data.c	
+8	pm33xx.c	
+9	timer.c	arch/arm/mach-omap2/
+10	dmtimer.c	
+11	cpu.h	arch/arm/plat-omap/include/plat/
+12	dmtimer.h	
+13	smartreflex.h	
+14	ti_adc.c	drivers/staging/iio/adc/ti_adc.c
+15	multi.c	drivers/usb/gadget/multi.c
+16	cppi41.h	drivers/usb/musb/cppi41.h
+17	cppi41.c	drivers/usb/musb/cppi41.c
+18	cppi41_dma.h	drivers/usb/musb/cppi41_dma.h
+19	cppi41_dma.c	drivers/usb/musb/cppi41_dma.c
+20	musb_gadget.c	drivers/usb/musb/musb_gadget.c
+21	ti81xx.c	drivers/usb/musb/ti81xx.c
+22	conf	scripts/kconfig/conf
+
+	7.2 Processing Narrative 
+Processing narrative for kernel porting with new target board is as usual as normal kernel compilation, creating images, loading images, testing platform drivers and device controllers based on  testing procedure.
+
+
+
+	7.3 Algorithm Description 
+Kernel porting project mainly concentrate on existing files and changes in files or modification in files so Algorithm Description is not applicable for these changes.
+	7.4 Modules Used
+		Modules used are defined in the above table which describes 
+files changed and location of file in kernel directory.
+	7.5 Comments/Restrictions/Limitations
+The table shown files are for Beaglebone target board and most of the files are common to all ARM supported target boards, this is limitation of project.
+8.Interface Design  
+	8.1 User- machine Interfaces
+User is connected through Linux host pc and uses vim editor to modify/change the files in kernel directory.
+
+
+
+
+
+
+
+ 
+
+
+
+	8.2 Interface to External Programs, Systems or Devices
+Connecting with other host pc is through remote ssh, sftp  and target board is connected through  minicom and can see logs in Linux pc and the same can be done through teraterm in windows pc.
+
+
+
+9. Test  Provision
+	9.1 Test Guidelines
+Testing the target board is through platform test suite  provided by board vendor or through LDD (Linux Device Driver) test suite which tests all the initial drivers for TI board.
+	9.2 Module Testing
+Module testing is done through Debugging Techqunies  like printk statements, checking register values and variable values by referencing Linux Device Drivers by Alessandro Rubini.
+	9.3 Integration Strategy
+Compiled Kernel image is copied or dumped on to target board using “sd” card or x-modem ( part of u-boot ).				
+		
+10. Conclusion and scope for future work
+The Conclusion of project is to find files changed for base porting of kernel from one board to other board and this information is used for all other boards kernel base porting with minimal changes if ARM architecture version is same. 
+Scope for future work is getting common files while changing from one board to other board, for particular ARM architecture (ex. ARM v7) in arch/arm/kernel, and arch/arm/mm etc.. directories.
+11 . Bibliography
+	kernel.org – For vanilla kernel source code
+	elinux.org/BeagleBone	 -- BeagleBone introduction	http://focus.ti.com/docs/training/catalog/events/event.jhtml?sku=OLT313020  -- Sitara board porting series videos
+	http://processors.wiki.ti.com/index.php/Sitara_Linux_Training:_Linux_Board_Port – Sitara board porting series
+	
+12 . Appendices 
+	Page Index 
+	Abstract  			page no
+	Introduction		page no
+	Descriotion			page no
+	
+	
+	 
+	
+
+
+
+ 		
+ 
+		 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+ Providing Kernel  Modularity based on different target boards is the challenge
+This project is about changes, modifications & additions in the Kernel for supporting  new Target board.
+Kernel 3.2 is the base version and Target board is Beaglebone for this project because Beaglebone is open source evaluation board and having good support in Open source Community.
+This project  discusses about Files, Functions added in Linux kernel to support the Linux kernel base version 3.2 on target board Beaglebone.  This is Base porting of Linux kernel on Beaglebone and it is used as reference for porting Linux kernel  to ARM family target boards.  
+ 
+
+http://www.wikihow.com/Write-a-Research-Introduction
+http://www.wikihow.com/Do-a-Literature-Review
+http://www.wikihow.com/Write-a-Briefing-Paper
+
+
+
+
+
+
+
+
